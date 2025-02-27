@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>重要提问</title>
+    <style>
+        /* 原始样式 */
+        body {
+            background: linear-gradient(45deg, #ffdde1, #ee9ca7);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            transition: background 0.5s;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+        }
+
+        button {
+            padding: 20px 40px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #4CAF50;
+            color: white;
+            transform: scale(1);
+        }
+
+        #noBtn {
+            background-color: #ff4b6e;
+            color: white;
+        }
+
+        .alert {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .show-alert {
+            top: 20px;
+            opacity: 1;
+        }
+
+        /* 新增成功页样式 */
+        .success-container {
+            text-align: center;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .success-title {
+            color: #4CAF50;
+            margin: 30px 0;
+            animation: jump 0.8s infinite;
+        }
+
+        #loveImage {
+            width: 200px;
+            animation: float 3s ease-in-out infinite;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        /* 关键帧动画 */
+        @keyframes jump {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 提问页 -->
+    <div class="question-page">
+        <h1>蛋蛋可以成为我的小兔子吗？🐰</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="showLove()">当 然 可 以 ❤</button>
+            <button id="noBtn" onclick="shrinkButton()">不 要 🚫</button>
+        </div>
+        <div class="alert" id="alert">真的吗？好难过(◍•﹏•)</div>
+    </div>
+
+    <!-- 成功页 -->
+    <div class="success-container" id="successPage">
+        <id = 'loveImage' src="" alt="专属小兔子">
+        <h1 class="success-title">🎉 我 喜 欢 小 蛋！💖</h1>
+    </div>
+
+    <script>
+        // 初始缩放比例
+        let noBtnScale = 1;
+        let yesBtnScale = 1;
+
+        function shrinkButton() {
+            // 缩小"不要"按钮
+            noBtnScale *= 0.8;
+            document.getElementById('noBtn').style.transform = `scale(${noBtnScale})`;
+            
+            // 放大"可以"按钮
+            yesBtnScale *= 1.2;
+            document.getElementById('yesBtn').style.transform = `scale(${yesBtnScale})`;
+            
+            // 显示提示
+            const alert = document.getElementById('alert');
+            alert.classList.add('show-alert');
+            setTimeout(() => alert.classList.remove('show-alert'), 1500);
+
+            // 当缩小到不可见时完全隐藏
+            if(noBtnScale < 0.2) {
+                document.getElementById('noBtn').style.display = 'none';
+            }
+        }
+
+        function showLove() {
+            // 渐变切换页面
+            document.querySelector('.question-page').style.opacity = '0';
+            document.getElementById('successPage').style.opacity = '1';
+            
+            // 设置图片和动画
+            const loveImage = document.getElementById('loveImage');
+            loveImage.src = 'https://s6.jpg.cm/2022/08/22/P4t4kE.jpg';
+            loveImage.style.opacity = '1';
+
+            // 修改背景
+            document.body.style.background = 'linear-gradient(45deg, #a8e6cf, #dcedc1)';
+        }
+    </script>
+</body>
+</html>
